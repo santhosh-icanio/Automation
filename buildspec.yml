@@ -3,8 +3,15 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      java: corretto11  # or your Java version
+      java: corretto11
   build:
     commands:
+      - echo "Current directory:"
+      - pwd
+      - echo "Listing contents of root:"
+      - ls -la
+      - echo "Listing dmstest directory (if exists):"
+      - ls -la dmstest || echo "dmstest directory not found"
       - cd dmstest/prj/UITest/Playwright/Automation
+      - echo "Running mvn tests..."
       - mvn test -DsuiteXmlFile=suite/Functional.xml -DtestFailureIgnore=false
