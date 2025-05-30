@@ -18,8 +18,7 @@ phases:
     commands:
       - echo "Running Maven tests"
       - cd dmstest/prj/UITest/Playwright/Automation
-      - mvn test -DsuiteXmlFile=suite/Functional.xml -DtestFailureIgnore=false | tee mvn-output.txt
-      - grep -i "Error:  Tests run:" mvn-output.txt || true
+      - mvn test -DsuiteXmlFile=suite/Functional.xml -DtestFailureIgnore=false 
 
   post_build:
     commands:
