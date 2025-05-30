@@ -1,0 +1,12 @@
+{
+  "enums": {
+    "basicInfo": "10",
+    "enumName": "enum1",
+    "value": "22",
+    "displayName": "enum creation"
+  },
+  "searchEdit": {
+    "enumerationID": "10",
+    "editValue": "20"
+  }
+}

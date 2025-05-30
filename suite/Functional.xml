@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2024 ContentStack, Inc.
+  ~  All rights reserved.
+  ~
+  ~  This software and its documentation are confidential and proprietary
+  ~  information of ContentStack, Inc. Unauthorized use, duplication,
+  ~  or distribution is strictly prohibited.
+  -->
+
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Functional Suite">
+    <listeners>
+        <listener class-name="com.trilogy.dcm.listeners.TestListener"/>
+        <listener class-name="com.trilogy.dcm.listeners.SuiteRetryAnalyzer"/>
+    </listeners>
+    <test name="Login Test">
+        <classes>
+            <class name="com.trilogy.dcm.tests.login.LoginTest"/>
+        </classes>
+    </test>
+
+    <test name="Party Test">
+        <classes>
+            <class name="com.trilogy.dcm.tests.party.PartyTest"/>
+        </classes>
+    </test>
+
+    <test name="PersonParty Test">
+        <classes>
+            <class name="com.trilogy.dcm.tests.personParty.PersonPartyTest"/>
+        </classes>
+    </test>
+
+    <test name="Location Party Test">
+        <classes>
+            <class name="com.trilogy.dcm.tests.locationParty.LocationPartyTest" />
+        </classes>
+    </test>
+
+    <test name="Product Search Test">
+        <classes>
+            <class name="com.trilogy.dcm.tests.productSearch.ProductSearchTest" />
+        </classes>
+    </test>
+
+    <test name="Dcm Admin Enums Test">
+        <classes>
+            <class name="com.trilogy.dcm.tests.dcmAdminEnums.DcmAdminEnumsTest" />
+        </classes>
+    </test>
+</suite>

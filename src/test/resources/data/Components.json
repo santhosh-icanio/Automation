@@ -1,0 +1,17 @@
+{
+  "createComponent":{
+    "searchContractName" : "Organisation Contract",
+    "componentName": "Component Name",
+    "description": "Component for Medlife",
+    "label": "Medlife Label",
+    "quotaSearch": "PRODUCT QUOTA",
+    "PaymentSearch": "Americhoice SNP AZ"
+  },
+  "searchComponent": {
+    "componentValue": "DCM Component"
+  },
+  "editComponent": {
+    "newLabelName": "DCM_Label"
+  }
+  }
+

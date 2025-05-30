@@ -1,0 +1,15 @@
+{
+  "location": {
+    "name": "Doe",
+    "id": "10",
+    "dtccId": "2222",
+    "faxNumber": "1234567890",
+    "physicalStreet1": "North Street",
+    "physicalCity": "Chennai",
+    "zipCode": "600001"
+  },
+  "locationSearch": {
+    "name": "Doe",
+    "editName": "Roman"
+  }
+}

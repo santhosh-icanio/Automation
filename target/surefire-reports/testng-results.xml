@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results ignored="0" total="3" passed="3" failed="0" skipped="0">
+  <reporter-output>
+  </reporter-output>
+  <suite started-at="2025-05-24T12:58:43 IST" name="Login" finished-at="2025-05-24T12:59:43 IST" duration-ms="60249">
+    <groups>
+    </groups>
+    <test started-at="2025-05-24T12:58:43 IST" name="Dcm Admin Enums Test" finished-at="2025-05-24T12:59:43 IST" duration-ms="60249">
+      <class name="com.trilogy.dcm.tests.dcmAdminEnums.DcmAdminEnumsTest">
+        <test-method is-config="true" signature="setup()[pri:0, instance:com.trilogy.dcm.tests.dcmAdminEnums.DcmAdminEnumsTest@1c32386d]" started-at="2025-05-24T12:58:43 IST" name="setup" finished-at="2025-05-24T12:58:49 IST" duration-ms="6336" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setup -->
+        <test-method is-config="true" signature="setupCurrentTestReport(java.lang.reflect.Method)[pri:0, instance:com.trilogy.dcm.tests.dcmAdminEnums.DcmAdminEnumsTest@1c32386d]" started-at="2025-05-24T12:58:49 IST" name="setupCurrentTestReport" finished-at="2025-05-24T12:58:49 IST" duration-ms="1" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void com.trilogy.dcm.tests.dcmAdminEnums.DcmAdminEnumsTest.dcmAdminEnumsPage()]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setupCurrentTestReport -->
+        <test-method signature="dcmAdminEnumsPage()[pri:1, instance:com.trilogy.dcm.tests.dcmAdminEnums.DcmAdminEnumsTest@1c32386d]" started-at="2025-05-24T12:58:49 IST" name="dcmAdminEnumsPage" finished-at="2025-05-24T12:59:22 IST" duration-ms="33322" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- dcmAdminEnumsPage -->
+        <test-method is-config="true" signature="setupCurrentTestReport(java.lang.reflect.Method)[pri:0, instance:com.trilogy.dcm.tests.dcmAdminEnums.DcmAdminEnumsTest@1c32386d]" started-at="2025-05-24T12:59:22 IST" name="setupCurrentTestReport" finished-at="2025-05-24T12:59:22 IST" duration-ms="1" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void com.trilogy.dcm.tests.dcmAdminEnums.DcmAdminEnumsTest.createEnums(java.lang.String,java.lang.String,java.lang.String,java.lang.String)]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setupCurrentTestReport -->
+        <test-method signature="createEnums(java.lang.String,java.lang.String,java.lang.String,java.lang.String)[pri:2, instance:com.trilogy.dcm.tests.dcmAdminEnums.DcmAdminEnumsTest@1c32386d]" started-at="2025-05-24T12:59:22 IST" name="createEnums" data-provider="enums" finished-at="2025-05-24T12:59:37 IST" duration-ms="14818" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[10]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[enum1]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[22]]>
+              </value>
+            </param>
+            <param index="3">
+              <value>
+                <![CDATA[enum creation]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- createEnums -->
+        <test-method is-config="true" signature="setupCurrentTestReport(java.lang.reflect.Method)[pri:0, instance:com.trilogy.dcm.tests.dcmAdminEnums.DcmAdminEnumsTest@1c32386d]" started-at="2025-05-24T12:59:37 IST" name="setupCurrentTestReport" finished-at="2025-05-24T12:59:37 IST" duration-ms="1" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void com.trilogy.dcm.tests.dcmAdminEnums.DcmAdminEnumsTest.searchAndEditEnums(java.lang.String,java.lang.String)]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setupCurrentTestReport -->
+        <test-method signature="searchAndEditEnums(java.lang.String,java.lang.String)[pri:3, instance:com.trilogy.dcm.tests.dcmAdminEnums.DcmAdminEnumsTest@1c32386d]" started-at="2025-05-24T12:59:37 IST" name="searchAndEditEnums" data-provider="searchEdit" finished-at="2025-05-24T12:59:43 IST" duration-ms="5383" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[10]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[20]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- searchAndEditEnums -->
+        <test-method is-config="true" signature="tearDown()[pri:0, instance:com.trilogy.dcm.tests.dcmAdminEnums.DcmAdminEnumsTest@1c32386d]" started-at="2025-05-24T12:59:43 IST" name="tearDown" finished-at="2025-05-24T12:59:43 IST" duration-ms="308" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+      </class> <!-- com.trilogy.dcm.tests.dcmAdminEnums.DcmAdminEnumsTest -->
+    </test> <!-- Dcm Admin Enums Test -->
+  </suite> <!-- Login -->
+</testng-results>

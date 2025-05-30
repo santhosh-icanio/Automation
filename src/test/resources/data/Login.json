@@ -1,0 +1,15 @@
+{
+  "login": {
+    "email": "sa",
+    "password": "login.password"
+  },
+
+  "invalidUserName": {
+    "invalidEmail": "Admin",
+    "password": "login.password"
+  },
+  "invalidPassword": {
+    "email": "sa",
+    "invalidPassword": "Admin123"
+  }
+}

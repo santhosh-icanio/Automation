@@ -1,0 +1,18 @@
+{"client": {
+  "clientId": "99999",
+  "clientName": "Apple",
+  "street1": "Street1",
+  "city": "Orlando",
+  "country": "US",
+  "state": "Florida",
+  "postalCode": "32820"
+
+},
+  "Search": {
+    "searchClientId": "66666"
+  },
+  "edit": {
+    "newClientName": "IPLANET"
+  }
+}
+

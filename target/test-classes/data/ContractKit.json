@@ -1,0 +1,8 @@
+{"contractKit": {
+  "contractKitName": "Organisation Contract",
+ "description": "Contract for the Organisation and Client"
+},
+  "search":{
+    "searchContractName" : "Customer Contract"
+  }
+}
