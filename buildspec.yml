@@ -8,10 +8,5 @@ phases:
     commands:
       - echo "Current directory:"
       - pwd
-      - echo "Listing contents of root:"
-      - ls -la
-      - echo "Listing dmstest directory (if exists):"
-      - ls -la dmstest || echo "dmstest directory not found"
-      - cd dmstest/prj/UITest/Playwright/Automation
       - echo "Running mvn tests..."
       - mvn test -DsuiteXmlFile=suite/Functional.xml -DtestFailureIgnore=false
