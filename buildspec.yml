@@ -4,8 +4,8 @@ phases:
   install:
     runtime-versions:
       java: corretto21
-build:
-  commands:
-    - java -version
-    - javac -version
-    - mvn test -DsuiteXmlFile=suite/Functional.xml -DtestFailureIgnore=false
+
+  build:
+    commands:
+      - echo "Running Maven tests"
+      - mvn test -DsuiteXmlFile=suite/Functional.xml -DtestFailureIgnore=false
