@@ -3,10 +3,9 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      java: corretto11
-  build:
-    commands:
-      - echo "Current directory:"
-      - pwd
-      - echo "Running mvn tests..."
-      - mvn test -DsuiteXmlFile=suite/Functional.xml -DtestFailureIgnore=false
+      java: corretto21
+build:
+  commands:
+    - java -version
+    - javac -version
+    - mvn test -DsuiteXmlFile=suite/Functional.xml -DtestFailureIgnore=false
