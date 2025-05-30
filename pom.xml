@@ -62,8 +62,8 @@
             <id>Smoke</id>
             <properties>
                 <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-                <maven.compiler.source>${javaVersion}</maven.compiler.source>
-                <maven.compiler.target>${javaVersion}</maven.compiler.target>
+                <maven.compiler.source>11</maven.compiler.source>
+                <maven.compiler.target>11</maven.compiler.target>
             </properties>
             <build>
                 <pluginManagement>
