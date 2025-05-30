@@ -9,3 +9,8 @@ phases:
     commands:
       - echo "Running Maven tests"
       - mvn test -DsuiteXmlFile=suite/Functional.xml -DtestFailureIgnore=false
+
+  post_build:
+    commands:
+      - echo "Uploading test reports to S3..."
+      - aws s3 cp test-output/Reports/ s3://dcmplaywright-report/ --recursive
