@@ -18,15 +18,17 @@ phases:
 
       - echo "Uploading test reports to S3..."
       - export DATE_TIME=$(date +%F/%H-%M-%S)
-      - export REPORT_FILE="Functional_Report_default_${DATE_TIME//\//_}.html"
+      - export DATE_DIR=$(echo "$DATE_TIME" | cut -d'/' -f1)
+      - export TIME_DIR=$(echo "$DATE_TIME" | cut -d'/' -f2)
+      - export REPORT_FILE="Functional_Report_default_${DATE_DIR}_${TIME_DIR}.html"
       - export LOCAL_REPORT=$(find test-output/Reports/ -name "Functional_Report_default*.html" | head -n 1)
-      - export S3_KEY="dcmplaywright-report/$DATE_TIME/${REPORT_FILE}"
+      - export S3_KEY="dcmplaywright-report/${DATE_DIR}/${TIME_DIR}/${REPORT_FILE}"
 
       # Upload the report to S3
       - aws s3 cp "$LOCAL_REPORT" "s3://$S3_KEY"
 
-      # Construct static S3 URL (Assumes public or accessible bucket)
-      - export SIGNED_URL="https://dcmplaywright-report.s3.amazonaws.com/$DATE_TIME/${REPORT_FILE}"
+      # Construct AWS Console S3 Object URL
+      - export SIGNED_URL="https://us-east-1.console.aws.amazon.com/s3/object/dcmplaywright-report?region=us-east-1&bucketType=general&prefix=${DATE_DIR}/${TIME_DIR}/${REPORT_FILE}"
 
       # Read test result
       - export TEST_RESULT=$(cat test_result_code.txt)
@@ -44,6 +46,6 @@ phases:
       - |
         curl -X POST -H "Content-Type: application/json" \
           -d "{
-                'text': '${STATUS}\n\nView the test report [here](${SIGNED_URL})'
+                'text': '${STATUS}\n\nView the test report in AWS Console [here](${SIGNED_URL})'
               }" \
           "https://chat.googleapis.com/v1/spaces/AAAA0q_7a84/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=2sgTj39vsGjHblKJrS_pAKTiHPxXi08Z-LG0lHmma4I"
