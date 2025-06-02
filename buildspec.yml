@@ -13,4 +13,6 @@ phases:
   post_build:
     commands:
       - echo "Uploading test reports to S3..."
-      - aws s3 cp test-output/Reports/ s3://dcmplaywright-report/ --recursive
+      - export DATE_TIME=$(date +%F/%H-%M-%S)
+      - echo "Uploading to s3://dcmplaywright-report/$DATE_TIME/"
+      - aws s3 cp test-output/Reports/ s3://dcmplaywright-report/$DATE_TIME/ --recursive
