@@ -10,36 +10,33 @@ phases:
       - echo "Running Maven tests"
       - mvn test -DsuiteXmlFile=suite/Functional.xml -DtestFailureIgnore=false
 
-  post_build:
-    commands:
-      - echo "Current AWS identity inside CodeBuild:"
-      - aws sts get-caller-identity
+post_build:
+  commands:
+    - export DATE_TIME=$(date +%F/%H-%M-%S)
+    - export FILE_NAME="Functional_Report_default_${DATE_TIME//\//_}.html"
+    - export S3_FOLDER="2025-06-02/11-17-21"  # Or generate dynamically like: $(date +%F/%H-%M-%S)
+    - export S3_BUCKET="dcmplaywright-report"
+    - export REGION="us-east-1"
 
-      - echo "Uploading test reports to S3..."
-      - export DATE_TIME=$(date +%F/%H-%M-%S)
-      - export REPORT_FILE="Functional_Report_default_${DATE_TIME//\//_}.html"
-      - export S3_KEY="test-output/Reports/${REPORT_FILE}"
-      - export S3_DEST="dcmplaywright-report/$DATE_TIME/${REPORT_FILE}"
-      
-      # Upload the main report file
-      - aws s3 cp test-output/Reports/Functional_Report_default*.html s3://$S3_DEST
+    # Upload report
+    - aws s3 cp test-output/Reports/$FILE_NAME s3://$S3_BUCKET/$S3_FOLDER/$FILE_NAME
 
-      # Generate a pre-signed URL valid for 10 minutes
-      - export SIGNED_URL=$(aws s3 presign s3://$S3_DEST --expires-in 600)
+    # Construct static S3 URL (make sure your bucket allows public read OR restrict via CloudFront)
+    - export REPORT_URL="https://${S3_BUCKET}.s3.${REGION}.amazonaws.com/${S3_FOLDER}/${FILE_NAME}"
 
-      # Determine job status
-      - |
-        if [ $? -eq 0 ]; then
-          STATUS="✅ *Test Success*"
-        else
-          STATUS="❌ *Test Failed*"
-        fi
+    # Determine Maven result
+    - |
+      if [ $? -eq 0 ]; then
+        STATUS="✅ *Test Success*"
+      else
+        STATUS="❌ *Test Failed*"
+      fi
 
-      # Send notification to Google Chat
-      - echo "Sending message to Google Chat"
-      - |
-        curl -X POST -H "Content-Type: application/json" \
+    # Send to Google Chat
+    - |
+      curl -X POST -H "Content-Type: application/json" \
         -d "{
-              'text': '${STATUS}\n\nClick [here](${SIGNED_URL}) to view the test report.'
+              'text': '${STATUS}\n\n[Click here to view the report](${REPORT_URL})'
             }" \
-        "https://chat.googleapis.com/v1/spaces/AAAA0q_7a84/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=2sgTj39vsGjHblKJrS_pAKTiHPxXi08Z-LG0lHmma4I"
+        'https://chat.googleapis.com/v1/spaces/AAAA0q_7a84/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=2sgTj39vsGjHblKJrS_pAKTiHPxXi08Z-LG0lHmma4I'
+
