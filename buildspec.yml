@@ -11,39 +11,41 @@ phases:
       - mvn test -DsuiteXmlFile=suite/Functional.xml -DtestFailureIgnore=false
       - echo $? > test_result_code.txt  # Save test result
 
-  post_build:
-    commands:
-      - echo "Current AWS identity inside CodeBuild:"
-      - aws sts get-caller-identity
+post_build:
+  commands:
+    - echo "Current AWS identity inside CodeBuild:"
+    - aws sts get-caller-identity
 
-      - echo "Uploading test reports to S3..."
-      - export DATE_TIME=$(date +%F/%H-%M-%S)
-      - export REPORT_FILE="Functional_Report_default_${DATE_TIME//\//_}.html"
-      - export LOCAL_REPORT=$(find test-output/Reports/ -name "Functional_Report_default*.html" | head -n 1)
-      - export S3_KEY="dcmplaywright-report/$DATE_TIME/${REPORT_FILE}"
+    - echo "Uploading test reports to S3..."
+    - export DATE_TIME=$(date +%F/%H-%M-%S)
+    - export REPORT_FILE="Functional_Report_default_${DATE_TIME//\//_}.html"
+    - export LOCAL_REPORT=$(find test-output/Reports/ -name "Functional_Report_default*.html" | head -n 1)
+    - export S3_KEY="dcmplaywright-report/$DATE_TIME/${REPORT_FILE}"
 
-      # Upload the report to S3
-      - aws s3 cp "$LOCAL_REPORT" "s3://$S3_KEY"
+    # Upload the report to S3
+    - aws s3 cp "$LOCAL_REPORT" "s3://$S3_KEY"
 
-      # Generate a pre-signed URL valid for 10 minutes
-      - export SIGNED_URL=$(aws s3 presign "s3://$S3_KEY" --expires-in 600)
+    # Construct static S3 console URL
+    - export REGION="us-east-1"
+    - export STATIC_URL="https://${REGION}.console.aws.amazon.com/s3/object/dcmplaywright-report?region=${REGION}&prefix=${DATE_TIME}/${REPORT_FILE}"
 
-      # Read test result
-      - export TEST_RESULT=$(cat test_result_code.txt)
+    # Read test result
+    - export TEST_RESULT=$(cat test_result_code.txt)
 
-      # Set test status message
-      - |
-        if [ "$TEST_RESULT" -eq 0 ]; then
-          STATUS="✅ *Test Success*"
-        else
-          STATUS="❌ *Test Failed*"
-        fi
+    # Set test status message
+    - |
+      if [ "$TEST_RESULT" -eq 0 ]; then
+        STATUS="✅ *Test Success*"
+      else
+        STATUS="❌ *Test Failed*"
+      fi
 
-      # Send notification to Google Chat
-      - echo "Sending notification to Google Chat..."
-      - |
-        curl -X POST -H "Content-Type: application/json" \
-          -d "{
-                'text': '${STATUS}\n\nView the test report [here](${SIGNED_URL})'
-              }" \
-          "https://chat.googleapis.com/v1/spaces/AAAA0q_7a84/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=2sgTj39vsGjHblKJrS_pAKTiHPxXi08Z-LG0lHmma4I"
+    # Send notification to Google Chat with static S3 URL
+    - echo "Sending notification to Google Chat..."
+    - |
+      curl -X POST -H "Content-Type: application/json" \
+        -d "{
+              'text': '${STATUS}\n\nView the test report [here](${STATIC_URL})'
+            }" \
+        "https://chat.googleapis.com/v1/spaces/AAAA0q_7a84/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=2sgTj39vsGjHblKJrS_pAKTiHPxXi08Z-LG0lHmma4I"
+
