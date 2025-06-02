@@ -4,15 +4,36 @@ phases:
   install:
     runtime-versions:
       java: corretto21
+
   build:
     commands:
       - echo "Running Maven tests"
       - mvn test -DsuiteXmlFile=suite/Functional.xml -DtestFailureIgnore=false
+
   post_build:
     commands:
       - echo "Current AWS identity inside CodeBuild:"
       - aws sts get-caller-identity
+
       - echo "Uploading test reports to S3..."
       - export DATE_TIME=$(date +%F/%H-%M-%S)
-      - echo "Uploading to s3://dcmplaywright-report/$DATE_TIME/"
-      - aws s3 cp test-output/Reports/ s3://dcmplaywright-report/$DATE_TIME/ --recursive
+      - export S3_PATH="s3://dcmplaywright-report/$DATE_TIME/"
+      - export S3_UI_LINK="https://s3.console.aws.amazon.com/s3/buckets/dcmplaywright-report?prefix=$DATE_TIME/&showversions=false"
+
+      - aws s3 cp test-output/Reports/ $S3_PATH --recursive
+
+      # Determine status
+      - |
+        if [ $? -eq 0 ]; then
+          export STATUS="✅ *Success*"
+        else
+          export STATUS="❌ *Failed*"
+        fi
+
+      - echo "Sending Google Chat notification..."
+      - |
+        curl -X POST -H "Content-Type: application/json" \
+          -d "{
+                'text': '${STATUS} - Maven tests completed.\n\nReport available [here](${S3_UI_LINK})'
+              }" \
+          "https://chat.googleapis.com/v1/spaces/AAAA0q_7a84/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=2sgTj39vsGjHblKJrS_pAKTiHPxXi08Z-LG0lHmma4I"
