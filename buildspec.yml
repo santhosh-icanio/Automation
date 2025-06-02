@@ -25,9 +25,9 @@ post_build:
     # Upload the report to S3
     - aws s3 cp "$LOCAL_REPORT" "s3://$S3_KEY"
 
-    # Construct static S3 console URL
+    # Construct S3 console folder view URL
     - export REGION="us-east-1"
-    - export STATIC_URL="https://${REGION}.console.aws.amazon.com/s3/object/dcmplaywright-report?region=${REGION}&prefix=${DATE_TIME}/${REPORT_FILE}"
+    - export CONSOLE_URL="https://s3.console.aws.amazon.com/s3/buckets/dcmplaywright-report?prefix=${DATE_TIME}/&showversions=false"
 
     # Read test result
     - export TEST_RESULT=$(cat test_result_code.txt)
@@ -40,12 +40,13 @@ post_build:
         STATUS="❌ *Test Failed*"
       fi
 
-    # Send notification to Google Chat with static S3 URL
+    # Send notification to Google Chat with folder URL
     - echo "Sending notification to Google Chat..."
     - |
       curl -X POST -H "Content-Type: application/json" \
         -d "{
-              'text': '${STATUS}\n\nView the test report [here](${STATIC_URL})'
+              'text': '${STATUS}\n\nReport available [here](${CONSOLE_URL})'
             }" \
         "https://chat.googleapis.com/v1/spaces/AAAA0q_7a84/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=2sgTj39vsGjHblKJrS_pAKTiHPxXi08Z-LG0lHmma4I"
+
 
