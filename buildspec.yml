@@ -1,4 +1,3 @@
-version: 0.2
 
 phases:
   install:
@@ -12,6 +11,8 @@ phases:
 
   post_build:
     commands:
+      - echo "Current AWS identity inside CodeBuild:"
+      - aws sts get-caller-identity
       - echo "Uploading test reports to S3..."
       - export DATE_TIME=$(date +%F/%H-%M-%S)
       - echo "Uploading to s3://dcmplaywright-report/$DATE_TIME/"
