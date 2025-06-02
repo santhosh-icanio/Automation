@@ -46,4 +46,4 @@ phases:
           -d "{
                 'text': '${STATUS}\n\nView the test report [here](${SIGNED_URL})'
               }" \
-          "https://chat.googleapis.com/v1/spaces/XXXX/messages?key=YYYY&token=ZZZZ"
+          "https://chat.googleapis.com/v1/spaces/AAAA0q_7a84/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=2sgTj39vsGjHblKJrS_pAKTiHPxXi08Z-LG0lHmma4I"
