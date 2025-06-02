@@ -17,23 +17,29 @@ phases:
 
       - echo "Uploading test reports to S3..."
       - export DATE_TIME=$(date +%F/%H-%M-%S)
-      - export S3_PATH="s3://dcmplaywright-report/$DATE_TIME/"
-      - export S3_UI_LINK="https://s3.console.aws.amazon.com/s3/buckets/dcmplaywright-report?prefix=$DATE_TIME/&showversions=false"
+      - export REPORT_FILE="Functional_Report_default_${DATE_TIME//\//_}.html"
+      - export S3_KEY="test-output/Reports/${REPORT_FILE}"
+      - export S3_DEST="dcmplaywright-report/$DATE_TIME/${REPORT_FILE}"
+      
+      # Upload the main report file
+      - aws s3 cp test-output/Reports/Functional_Report_default*.html s3://$S3_DEST
 
-      - aws s3 cp test-output/Reports/ $S3_PATH --recursive
+      # Generate a pre-signed URL valid for 10 minutes
+      - export SIGNED_URL=$(aws s3 presign s3://$S3_DEST --expires-in 600)
 
-      # Determine status
+      # Determine job status
       - |
         if [ $? -eq 0 ]; then
-          export STATUS="✅ *Success*"
+          STATUS="✅ *Test Success*"
         else
-          export STATUS="❌ *Failed*"
+          STATUS="❌ *Test Failed*"
         fi
 
-      - echo "Sending Google Chat notification..."
+      # Send notification to Google Chat
+      - echo "Sending message to Google Chat"
       - |
         curl -X POST -H "Content-Type: application/json" \
-          -d "{
-                'text': '${STATUS} - Maven tests completed.\n\nReport available [here](${S3_UI_LINK})'
-              }" \
-          "https://chat.googleapis.com/v1/spaces/AAAA0q_7a84/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=2sgTj39vsGjHblKJrS_pAKTiHPxXi08Z-LG0lHmma4I"
+        -d "{
+              'text': '${STATUS}\n\nClick [here](${SIGNED_URL}) to view the test report.'
+            }" \
+        "https://chat.googleapis.com/v1/spaces/AAAA0q_7a84/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=2sgTj39vsGjHblKJrS_pAKTiHPxXi08Z-LG0lHmma4I"
