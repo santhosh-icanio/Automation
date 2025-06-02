@@ -1,14 +1,13 @@
+version: 0.2
 
 phases:
   install:
     runtime-versions:
       java: corretto21
-
   build:
     commands:
       - echo "Running Maven tests"
       - mvn test -DsuiteXmlFile=suite/Functional.xml -DtestFailureIgnore=false
-
   post_build:
     commands:
       - echo "Current AWS identity inside CodeBuild:"
