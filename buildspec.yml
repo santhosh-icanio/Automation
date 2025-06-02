@@ -25,8 +25,8 @@ phases:
       # Upload the report to S3
       - aws s3 cp "$LOCAL_REPORT" "s3://$S3_KEY"
 
-      # Generate a pre-signed URL valid for 10 minutes
-      - export SIGNED_URL=$(aws s3 presign "s3://$S3_KEY" --expires-in 600)
+      # Construct static S3 URL (Assumes public or accessible bucket)
+      - export SIGNED_URL="https://dcmplaywright-report.s3.amazonaws.com/$DATE_TIME/${REPORT_FILE}"
 
       # Read test result
       - export TEST_RESULT=$(cat test_result_code.txt)
